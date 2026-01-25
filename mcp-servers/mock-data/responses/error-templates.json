@@ -1,0 +1,72 @@
+{
+  "errors": {
+    "E001": {
+      "code": "E001",
+      "name": "TABLE_NOT_FOUND",
+      "messageTemplate": "Table '{{tableName}}' not found. Available tables: {{availableTables}}",
+      "httpStatus": 404,
+      "description": "요청한 테이블이 스키마 레지스트리에 존재하지 않습니다."
+    },
+    "E002": {
+      "code": "E002",
+      "name": "COLUMN_NOT_FOUND",
+      "messageTemplate": "Column '{{columnName}}' not found in table '{{tableName}}'",
+      "httpStatus": 404,
+      "description": "요청한 컬럼이 테이블에 존재하지 않습니다."
+    },
+    "E003": {
+      "code": "E003",
+      "name": "SYNTAX_ERROR",
+      "messageTemplate": "SQL syntax error: {{details}}",
+      "httpStatus": 400,
+      "description": "SQL 문법 오류가 발생했습니다."
+    },
+    "E004": {
+      "code": "E004",
+      "name": "TIMEOUT",
+      "messageTemplate": "Operation timed out after {{timeout}}ms",
+      "httpStatus": 504,
+      "description": "작업이 제한 시간을 초과했습니다."
+    },
+    "E005": {
+      "code": "E005",
+      "name": "DAG_EXISTS",
+      "messageTemplate": "DAG '{{dagId}}' already exists. Set overwrite=true to replace.",
+      "httpStatus": 409,
+      "description": "동일한 ID의 DAG가 이미 존재합니다."
+    },
+    "E006": {
+      "code": "E006",
+      "name": "DAG_INVALID",
+      "messageTemplate": "DAG validation failed: {{errors}}",
+      "httpStatus": 400,
+      "description": "DAG 검증에 실패했습니다."
+    }
+  },
+  "warnings": {
+    "W001": {
+      "code": "W001",
+      "name": "NO_SCHEDULE",
+      "messageTemplate": "No schedule_interval or schedule defined",
+      "suggestion": "Add schedule_interval parameter (e.g., schedule_interval=\"@daily\")"
+    },
+    "W002": {
+      "code": "W002",
+      "name": "SELECT_STAR",
+      "messageTemplate": "Using SELECT * is not recommended",
+      "suggestion": "Specify explicit column names for better performance and clarity"
+    },
+    "W003": {
+      "code": "W003",
+      "name": "DATETIME_NOW",
+      "messageTemplate": "Using datetime.now() can cause issues",
+      "suggestion": "Use {{ ds }} or {{ execution_date }} templates instead"
+    },
+    "W004": {
+      "code": "W004",
+      "name": "HARDCODED_CREDENTIALS",
+      "messageTemplate": "Possible hardcoded credentials detected",
+      "suggestion": "Use Airflow Variables or Connections for sensitive data"
+    }
+  }
+}

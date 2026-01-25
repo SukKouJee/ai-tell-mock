@@ -1,0 +1,28 @@
+{
+  "name": "ai-tel-mook-mcp-servers",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MCP servers for AI-TEL Mock System",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "dev": "concurrently \"npm:dev:*\"",
+    "dev:sql": "npm run dev -w packages/sql-validator-mcp",
+    "dev:airflow": "npm run dev -w packages/airflow-mcp",
+    "dev:datahub": "npm run dev -w packages/datahub-mcp",
+    "dev:gateway": "npm run dev -w packages/gateway",
+    "test": "npm test --workspaces --if-present",
+    "clean": "rimraf packages/*/dist",
+    "typecheck": "tsc --build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

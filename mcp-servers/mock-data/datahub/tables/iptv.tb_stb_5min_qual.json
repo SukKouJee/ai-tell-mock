@@ -1,0 +1,61 @@
+{
+  "urn": "urn:li:dataset:(urn:li:dataPlatform:hive,iptv.tb_stb_5min_qual,PROD)",
+  "name": "tb_stb_5min_qual",
+  "platform": "hive",
+  "schema": "iptv",
+  "description": "STB 5분 단위 품질 지표 테이블. 각 STB 모델별 5분 간격으로 수집된 품질 메트릭을 저장합니다.",
+  "columns": [
+    {
+      "name": "collect_dt",
+      "type": "timestamp",
+      "nullable": false,
+      "description": "수집일시 - 5분 단위 수집 시점",
+      "isPrimaryKey": true
+    },
+    {
+      "name": "stb_model_cd",
+      "type": "varchar(50)",
+      "nullable": false,
+      "description": "장비모델코드 - STB 모델 식별자 (예: STB-2000X, STB-3000S, STB-4000P)",
+      "isPrimaryKey": true
+    },
+    {
+      "name": "mlr",
+      "type": "float",
+      "nullable": true,
+      "description": "Media Loss Rate - 미디어 손실률. 정상 범위: 0.0005 ~ 0.002"
+    },
+    {
+      "name": "jitter",
+      "type": "float",
+      "nullable": true,
+      "description": "Jitter (ms) - 지터. 패킷 도착 시간 변동. 정상 범위: 5 ~ 20ms"
+    },
+    {
+      "name": "ts_loss",
+      "type": "int",
+      "nullable": true,
+      "description": "TS Packet Loss - TS 패킷 손실 수. 정상 범위: 0 ~ 100"
+    },
+    {
+      "name": "buffering_cnt",
+      "type": "int",
+      "nullable": true,
+      "description": "버퍼링 횟수 - 5분간 발생한 버퍼링 이벤트 수. 정상 범위: 0 ~ 10"
+    },
+    {
+      "name": "bitrate_avg",
+      "type": "float",
+      "nullable": true,
+      "description": "평균 비트레이트 (kbps) - 5분간 평균 비트레이트. 정상 범위: 2000 ~ 8000 kbps"
+    }
+  ],
+  "tags": ["iptv", "quality", "stb", "5min", "realtime", "품질지표"],
+  "owners": ["data-platform@company.com"],
+  "lastModified": "2024-01-15T10:30:00Z",
+  "partitionKeys": ["collect_dt"],
+  "sampleQueries": [
+    "SELECT * FROM iptv.tb_stb_5min_qual WHERE collect_dt >= current_date - 1 LIMIT 100",
+    "SELECT stb_model_cd, AVG(mlr) as avg_mlr FROM iptv.tb_stb_5min_qual GROUP BY stb_model_cd"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ai-tel-mook": {
+      "command": "node",
+      "args": ["G:/ai/langgraph/ai_tell_mook/mcp-servers/packages/gateway-bridge/dist/index.js"]
+    }
+  }
+}

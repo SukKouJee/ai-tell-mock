@@ -1,0 +1,24 @@
+[project]
+name = "ai_tell_mook"
+version = "0.1.0"
+description = "ai-tell-mook using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]==1.8.1"
+]
+
+[project.scripts]
+ai_tell_mook = "ai_tell_mook.main:run"
+run_crew = "ai_tell_mook.main:run"
+train = "ai_tell_mook.main:train"
+replay = "ai_tell_mook.main:replay"
+test = "ai_tell_mook.main:test"
+run_with_trigger = "ai_tell_mook.main:run_with_trigger"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"

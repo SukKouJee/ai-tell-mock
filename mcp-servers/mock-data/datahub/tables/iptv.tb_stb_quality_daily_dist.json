@@ -1,0 +1,57 @@
+{
+  "urn": "urn:li:dataset:(urn:li:dataPlatform:hive,iptv.tb_stb_quality_daily_dist,PROD)",
+  "name": "tb_stb_quality_daily_dist",
+  "platform": "hive",
+  "schema": "iptv",
+  "description": "일별 품질 정규분포 통계 테이블. tb_stb_5min_qual 데이터를 일단위로 집계한 통계 데이터로, 각 모델별 품질 지표의 평균과 표준편차를 저장합니다.",
+  "columns": [
+    {
+      "name": "stat_date",
+      "type": "date",
+      "nullable": false,
+      "description": "통계일자 - 집계 대상 날짜",
+      "isPrimaryKey": true
+    },
+    {
+      "name": "stb_model_cd",
+      "type": "varchar(50)",
+      "nullable": false,
+      "description": "장비모델코드 - STB 모델 식별자",
+      "isPrimaryKey": true
+    },
+    {
+      "name": "mlr_mean",
+      "type": "float",
+      "nullable": true,
+      "description": "MLR 평균 - 해당 일자의 Media Loss Rate 평균값"
+    },
+    {
+      "name": "mlr_stddev",
+      "type": "float",
+      "nullable": true,
+      "description": "MLR 표준편차 - 해당 일자의 Media Loss Rate 표준편차"
+    },
+    {
+      "name": "jitter_mean",
+      "type": "float",
+      "nullable": true,
+      "description": "Jitter 평균 - 해당 일자의 Jitter 평균값 (ms)"
+    },
+    {
+      "name": "jitter_stddev",
+      "type": "float",
+      "nullable": true,
+      "description": "Jitter 표준편차 - 해당 일자의 Jitter 표준편차 (ms)"
+    }
+  ],
+  "tags": ["iptv", "quality", "stb", "daily", "statistics", "aggregation", "정규분포"],
+  "owners": ["data-platform@company.com"],
+  "lastModified": "2024-01-15T08:00:00Z",
+  "partitionKeys": ["stat_date"],
+  "upstream": ["iptv.tb_stb_5min_qual"],
+  "transformationLogic": "Daily aggregation from tb_stb_5min_qual using AVG and STDDEV functions grouped by stat_date and stb_model_cd",
+  "sampleQueries": [
+    "SELECT * FROM iptv.tb_stb_quality_daily_dist WHERE stat_date >= current_date - 7",
+    "SELECT stb_model_cd, AVG(mlr_mean) as avg_mlr_mean FROM iptv.tb_stb_quality_daily_dist GROUP BY stb_model_cd"
+  ]
+}

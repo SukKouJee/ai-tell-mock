@@ -1,0 +1,2 @@
+# This directory stores generated Airflow DAG files
+# Files in this directory are created by the airflow-mcp server

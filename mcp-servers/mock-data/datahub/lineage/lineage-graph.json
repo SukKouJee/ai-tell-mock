@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2024-01-15T10:00:00Z",
+  "edges": [
+    {
+      "sourceUrn": "urn:li:dataset:(urn:li:dataPlatform:hive,iptv.tb_stb_5min_qual,PROD)",
+      "targetUrn": "urn:li:dataset:(urn:li:dataPlatform:hive,iptv.tb_stb_quality_daily_dist,PROD)",
+      "type": "TRANSFORMED",
+      "description": "Daily aggregation pipeline - 5분 단위 품질 데이터를 일별 통계로 집계",
+      "transformationLogic": "SELECT DATE(collect_dt) as stat_date, stb_model_cd, AVG(mlr) as mlr_mean, STDDEV(mlr) as mlr_stddev, AVG(jitter) as jitter_mean, STDDEV(jitter) as jitter_stddev FROM iptv.tb_stb_5min_qual GROUP BY DATE(collect_dt), stb_model_cd",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "createdBy": "data-platform@company.com",
+      "metadata": {
+        "pipeline": "stb_quality_daily_agg",
+        "schedule": "@daily",
+        "dagId": "stb_quality_daily_aggregation"
+      }
+    },
+    {
+      "sourceUrn": "urn:li:dataset:(urn:li:dataPlatform:hive,iptv.tb_stb_master,PROD)",
+      "targetUrn": "urn:li:dataset:(urn:li:dataPlatform:hive,iptv.tb_stb_5min_qual,PROD)",
+      "type": "DERIVED",
+      "description": "STB 마스터 데이터에서 장비 정보 참조",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "createdBy": "data-platform@company.com",
+      "metadata": {
+        "joinType": "LEFT JOIN",
+        "joinKey": "stb_model_cd"
+      }
+    }
+  ],
+  "datasets": {
+    "urn:li:dataset:(urn:li:dataPlatform:hive,iptv.tb_stb_5min_qual,PROD)": {
+      "name": "iptv.tb_stb_5min_qual",
+      "platform": "hive",
+      "description": "STB 5분 단위 품질 지표"
+    },
+    "urn:li:dataset:(urn:li:dataPlatform:hive,iptv.tb_stb_quality_daily_dist,PROD)": {
+      "name": "iptv.tb_stb_quality_daily_dist",
+      "platform": "hive",
+      "description": "일별 품질 정규분포 통계"
+    },
+    "urn:li:dataset:(urn:li:dataPlatform:hive,iptv.tb_stb_master,PROD)": {
+      "name": "iptv.tb_stb_master",
+      "platform": "hive",
+      "description": "STB 장비 마스터"
+    }
+  }
+}
