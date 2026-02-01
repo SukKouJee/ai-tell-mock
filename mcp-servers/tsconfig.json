@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/shared" },
+    { "path": "./packages/sql-validator-mcp" },
+    { "path": "./packages/datahub-mcp" },
+    { "path": "./packages/airflow-mcp" },
+    { "path": "./packages/gateway-bridge" },
+    { "path": "./packages/gateway" }
+  ]
+}

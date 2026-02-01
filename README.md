@@ -129,6 +129,84 @@ curl -X POST http://localhost:8080/chat/test-thread/messages \
 
 ---
 
+## Docker로 실행하기
+
+### 1. Docker 이미지 빌드
+
+```bash
+cd mcp-servers
+docker build -t ai-tel-mock-gateway .
+```
+
+### 2. Docker 컨테이너 실행
+
+```bash
+# 환경변수를 직접 전달
+docker run -d \
+  --name mcp-gateway \
+  -p 8080:8080 \
+  -e OPENAI_API_KEY=sk-your-openai-api-key \
+  -e OPENAI_MODEL=gpt-4o-mini \
+  ai-tel-mock-gateway
+
+# 또는 .env 파일 사용
+docker run -d \
+  --name mcp-gateway \
+  -p 8080:8080 \
+  --env-file packages/gateway/.env \
+  ai-tel-mock-gateway
+```
+
+### 3. Docker Compose (선택사항)
+
+`docker-compose.yml` 파일 생성:
+
+```yaml
+version: '3.8'
+services:
+  mcp-gateway:
+    build: ./mcp-servers
+    container_name: mcp-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+      - PORT=8080
+      - HOST=0.0.0.0
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=gpt-4o-mini
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+```
+
+실행:
+```bash
+# .env 파일에 OPENAI_API_KEY 설정 후
+docker-compose up -d
+```
+
+### 4. 컨테이너 관리
+
+```bash
+# 로그 확인
+docker logs -f mcp-gateway
+
+# 컨테이너 중지
+docker stop mcp-gateway
+
+# 컨테이너 제거
+docker rm mcp-gateway
+
+# Health 체크
+curl http://localhost:8080/health
+```
+
+---
+
 ## Chat Flow
 
 ```

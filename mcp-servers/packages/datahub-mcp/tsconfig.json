@@ -1,9 +1,17 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "dist",
     "rootDir": "src",
-    "composite": true
+    "baseUrl": ".",
+    "paths": {
+      "@ai-tel-mook/shared": ["../shared/src/index.ts"],
+      "@ai-tel-mook/shared/*": ["../shared/src/*"]
+    }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../shared" }
+  ]
 }

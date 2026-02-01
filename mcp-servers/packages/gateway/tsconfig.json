@@ -1,8 +1,23 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@ai-tel-mook/shared": ["../shared/src/index.ts"],
+      "@ai-tel-mook/shared/*": ["../shared/src/*"],
+      "@ai-tel-mook/sql-validator-mcp/*": ["../sql-validator-mcp/src/*"],
+      "@ai-tel-mook/datahub-mcp/*": ["../datahub-mcp/src/*"],
+      "@ai-tel-mook/airflow-mcp/*": ["../airflow-mcp/src/*"]
+    }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../shared" },
+    { "path": "../sql-validator-mcp" },
+    { "path": "../datahub-mcp" },
+    { "path": "../airflow-mcp" }
+  ]
 }

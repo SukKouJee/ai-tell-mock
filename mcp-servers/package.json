@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
+    "build": "tsc --build",
     "dev": "concurrently \"npm:dev:*\"",
     "dev:sql": "npm run dev -w packages/sql-validator-mcp",
     "dev:airflow": "npm run dev -w packages/airflow-mcp",

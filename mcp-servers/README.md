@@ -166,6 +166,43 @@ curl http://localhost:8080/chat/status
 
 ---
 
+## Docker
+
+### Build & Run
+
+Dockerfile은 **미리 빌드된 dist 폴더**를 사용합니다. Docker 이미지 빌드 전에 반드시 TypeScript 빌드를 먼저 실행해야 합니다.
+
+```bash
+# 1. TypeScript 빌드 (필수)
+npm run build
+
+# 2. Docker 이미지 빌드
+docker build -t ai-tel-mook-gateway .
+
+# 3. 컨테이너 실행
+docker run -p 8080:8080 \
+  -e OPENAI_API_KEY=sk-your-key \
+  ai-tel-mook-gateway
+```
+
+### 왜 이런 방식인가?
+
+- **빠른 빌드**: Docker 내에서 TypeScript 컴파일을 하지 않아 이미지 빌드 속도가 빠름
+- **작은 이미지**: devDependencies 제외, 컴파일된 JS 파일만 포함
+- **일관성**: 로컬에서 테스트한 동일한 빌드 결과물이 Docker에서 실행됨
+
+### 환경 변수
+
+| 변수 | 기본값 | 설명 |
+|------|--------|------|
+| `OPENAI_API_KEY` | - | OpenAI API 키 (필수) |
+| `OPENAI_MODEL` | gpt-4o-mini | 사용할 모델 |
+| `PORT` | 8080 | 서버 포트 |
+| `HOST` | 0.0.0.0 | 바인드 주소 |
+| `NODE_ENV` | production | 실행 환경 |
+
+---
+
 ## API Reference
 
 ### Base URL

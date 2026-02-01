@@ -2,8 +2,8 @@
 node_modules
 **/node_modules
 
-# Build output (will be generated during docker build)
-**/dist
+# Build output - NOT ignored because Dockerfile uses pre-built dist
+# **/dist
 
 # Git
 .git
